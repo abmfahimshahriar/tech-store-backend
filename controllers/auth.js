@@ -65,7 +65,14 @@ exports.signin = async (req, res, next) => {
       );
       role = 'user';
     }
-    res.status(200).json({ token: token, userId: loadedUser._id.toString(), role:role });
+    res.status(200).json({
+      userData: {
+        token: token, 
+        userId: loadedUser._id.toString(), 
+        role:role
+      },
+      message: 'Successfully Logged In'
+    });
   } catch (err) {
     console.log(err);
   }

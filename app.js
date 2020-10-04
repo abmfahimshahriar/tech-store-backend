@@ -62,7 +62,7 @@ app.use((error, req, res, next) => {
 
 mongoose 
   .connect(
-    '<Your mongodb URI>'
+    "mongodb+srv://abmfahimshahriar:154410north@cluster0-xe9ja.mongodb.net/tech_shop"
     )
   .then(result => {
     console.log('connected.');
