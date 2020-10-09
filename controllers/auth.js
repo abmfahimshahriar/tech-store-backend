@@ -77,3 +77,20 @@ exports.signin = async (req, res, next) => {
     console.log(err);
   }
 };
+
+exports.getUser = async (req, res, next) => {
+  const id = req.body.userId;
+
+  try {
+    const user = await User.findOne({ _id: id });
+    if (!user) {
+      res.status(422).json({ message: 'User was not found!' });
+    }
+    else{
+      res.status(201).json({ userData: user });
+    }
+  }
+  catch(err) {
+    console.log(err);
+  }
+}

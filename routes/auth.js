@@ -14,5 +14,7 @@ router.put(
 
 router.post('/signin', authController.signin);
 
+router.post('/getUser', authController.getUser);
+
 
 module.exports = router;
