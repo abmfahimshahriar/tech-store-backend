@@ -6,7 +6,10 @@ const isAuth = require('../middleware/isAuth');
 const isAdmin = require('../middleware/isAdmin');
 
 const router = express.Router();
-
+router.get(
+  '/getsingleproduct/:id',
+  adminController.getSingleProduct
+);
 router.put(
   '/addproduct/:id',
   isAdmin,

@@ -5,6 +5,26 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 const Product = require('../models/product');
 const Order = require('../models/order');
+// get a singe product
+
+exports.getSingleProduct = async (req, res, next) => {
+  const prodId = req.params.id;
+
+  try {
+    const product = await Product.findById(prodId);
+    if (!product) {
+      res.status(422).json({ message: 'product not found!'});
+    }
+    else {
+      res.status(200).json({
+        message: 'Fetched the product successfully.',
+        product: product,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 // add product
 exports.addProduct = async (req, res, next) => {
