@@ -87,7 +87,10 @@ exports.getUser = async (req, res, next) => {
       res.status(422).json({ message: 'User was not found!' });
     }
     else{
-      res.status(201).json({ userData: user });
+      res.status(201).json({
+        message: 'User fetched',
+        userData: user
+      });
     }
   }
   catch(err) {
