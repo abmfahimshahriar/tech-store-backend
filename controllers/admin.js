@@ -128,9 +128,19 @@ exports.getProduct = async (req, res, next) => {
   const pageLimit = req.body.pageLimit;
   const pageNumber = req.body.pageNumber;
   const skipItems = pageNumber * pageLimit;
+  const searchKey = req.body.searchKey;
   try {
-    const products = await Product.find().skip(skipItems).limit(pageLimit);
-    const totalItems = await Product.countDocuments();
+    let products;
+    let totalItems;
+    if (searchKey) {
+      products = await Product.find({ $text: { $search: searchKey } }).skip(skipItems).limit(pageLimit);
+      totalItems = await Product.countDocuments({ $text: { $search: searchKey } });
+    }
+    else {
+      products = await Product.find().skip(skipItems).limit(pageLimit);
+      totalItems = await Product.countDocuments();
+    }
+
     res.status(200).json({
       message: 'Fetched products successfully.',
       products: products,
