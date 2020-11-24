@@ -11,7 +11,7 @@ router.post(
   adminController.addProduct
 );
 
-router.get(
+router.put(
   '/getProducts',
   adminController.getProduct
 );

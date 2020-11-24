@@ -125,12 +125,16 @@ const clearImage = filePath => {
 
 //get product
 exports.getProduct = async (req, res, next) => {
+  const pageLimit = req.body.pageLimit;
+  const pageNumber = req.body.pageNumber;
+  const skipItems = pageNumber * pageLimit;
   try {
-    const products = await Product.find();
-
+    const products = await Product.find().skip(skipItems).limit(pageLimit);
+    const totalItems = await Product.countDocuments();
     res.status(200).json({
       message: 'Fetched products successfully.',
       products: products,
+      totalItems: totalItems
     });
   } catch (err) {
     console.log(err);

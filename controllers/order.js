@@ -58,7 +58,6 @@ exports.getMyOrders = async (req, res, next) => {
     const userId = req.params.id;
     try {
         const orders = await Order.find({ creator: userId });
-
         res.status(200).json({
             message: 'Fetched orders successfully.',
             orders: orders,
