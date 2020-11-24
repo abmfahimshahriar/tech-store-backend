@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 
+const AllConstants = require('./shared/constants');
+
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 
@@ -62,7 +64,7 @@ app.use((error, req, res, next) => {
 
 mongoose 
   .connect(
-    "mongodb+srv://abmfahimshahriar:154410north@cluster0-xe9ja.mongodb.net/tech_shop"
+    AllConstants.DBConstants.MongoDbUri
     )
   .then(result => {
     console.log('connected.');

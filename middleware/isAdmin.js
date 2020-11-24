@@ -1,4 +1,7 @@
 const jwt = require('jsonwebtoken');
+const AllConstants = require('../shared/constants');
+
+
 
 module.exports = (req, res, next) => {
   const authHeader = req.get('Authorization');
@@ -10,7 +13,7 @@ module.exports = (req, res, next) => {
   const token = authHeader.split(' ')[1];
   let decodedToken;
   try {
-    decodedToken = jwt.verify(token, 'somesupersecretforadmin');
+    decodedToken = jwt.verify(token, AllConstants.KeyConstants.AdminTokenKey);
   } catch (err) {
     res.status(422).json({
         message: 'could not verify token',

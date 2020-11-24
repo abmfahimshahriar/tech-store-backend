@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
 const User = require('../models/user');
+const AllConstants = require('../shared/constants');
 
 exports.signup = async (req, res, next) => {
   const email = req.body.email;
@@ -49,7 +49,7 @@ exports.signin = async (req, res, next) => {
           email: loadedUser.email,
           userId: loadedUser._id.toString()
         },
-        'somesupersecretforadmin',
+        AllConstants.KeyConstants.AdminTokenKey,
         { expiresIn: '1h' }
       );
       role = 'admin';
@@ -60,7 +60,7 @@ exports.signin = async (req, res, next) => {
           email: loadedUser.email,
           userId: loadedUser._id.toString()
         },
-        'somesupersecretsecret',
+        AllConstants.KeyConstants.AuthTokenKey,
         { expiresIn: '1h' }
       );
       role = 'user';
