@@ -1,7 +1,6 @@
 const express = require('express');
-const { body } = require('express-validator/check');
 
-const adminController = require('../controllers/admin');
+const orderController = require('../controllers/order');
 const isAuth = require('../middleware/isAuth');
 const isAdmin = require('../middleware/isAdmin');
 
@@ -10,31 +9,31 @@ const router = express.Router();
 router.put(
     '/addOrder',
     isAuth,
-    adminController.addOrder
+    orderController.addOrder
 );
 
 router.get(
     '/getOrders',
     isAdmin,
-    adminController.getOrder
+    orderController.getOrder
 );
 
 router.put(
     '/updateOrderStatus/:id',
     isAdmin,
-    adminController.updateOrderStatus
+    orderController.updateOrderStatus
 );
 
 router.delete(
     '/deleteOrder/:id',
     isAdmin,
-    adminController.deleteOrder
+    orderController.deleteOrder
 );
 
 router.get(
     '/myOrders/:id',
     isAuth,
-    adminController.getMyOrders
+    orderController.getMyOrders
 );
 
 module.exports = router;
