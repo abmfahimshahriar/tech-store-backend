@@ -6,57 +6,33 @@ const isAuth = require('../middleware/isAuth');
 const isAdmin = require('../middleware/isAdmin');
 
 const router = express.Router();
-router.get(
-  '/getsingleproduct/:id',
-  adminController.getSingleProduct
-);
-router.put(
-  '/addproduct/:id',
-  isAdmin,
-  adminController.updateProduct
-);
 
 router.post(
-  '/addproduct',
+  '/addProduct',
   isAdmin,
   adminController.addProduct
 );
 
 router.get(
-  '/getproducts',
+  '/getProducts',
   adminController.getProduct
 );
-router.put(
-  '/addorder',
-  isAuth,
-  adminController.addOrder
+
+router.get(
+  '/getSingleProduct/:id',
+  adminController.getSingleProduct
 );
+
+router.put(
+  '/updateProduct/:id',
+  isAdmin,
+  adminController.updateProduct
+);
+
 router.delete(
-  '/deleteproduct/:id',
+  '/deleteProduct/:id',
   isAdmin,
   adminController.deleteProduct
-);
-router.get(
-  '/getorders',
-  isAdmin,
-  adminController.getOrder
-);
-
-router.get(
-  '/myorders/:id',
-  isAuth,
-  adminController.getMyOrders
-);
-
-router.delete(
-  '/deleteorder/:id',
-  isAdmin,
-  adminController.deleteOrder
-);
-router.put(
-  '/updateorderstatus/:id',
-  isAdmin,
-  adminController.updateOrderStatus
 );
 
 module.exports = router;

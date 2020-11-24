@@ -9,6 +9,7 @@ const AllConstants = require('./shared/constants');
 
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+const orderRoutes = require('./routes/order');
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.use((req, res, next) => {
 
 app.use('/auth', authRoutes);
 app.use('/products', adminRoutes);
+app.use('/orders',orderRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
