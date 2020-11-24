@@ -139,7 +139,12 @@ exports.getProduct = async (req, res, next) => {
           '$options': 'i'
         }
       }).skip(skipItems).limit(pageLimit);
-      totalItems = await Product.countDocuments({ $text: { $search: searchKey } });
+      totalItems = await Product.countDocuments({
+        title: {
+          $regex: searchKey,
+          '$options': 'i'
+        }
+      });
     }
     else {
       products = await Product.find().skip(skipItems).limit(pageLimit);
@@ -147,6 +152,7 @@ exports.getProduct = async (req, res, next) => {
     }
 
     res.status(200).json({
+      isSuccess: true,
       message: 'Fetched products successfully.',
       products: products,
       totalItems: totalItems
