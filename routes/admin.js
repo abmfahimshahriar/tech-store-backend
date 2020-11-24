@@ -41,6 +41,13 @@ router.get(
   isAdmin,
   adminController.getOrder
 );
+
+router.get(
+  '/myorders/:id',
+  isAuth,
+  adminController.getMyOrders
+);
+
 router.delete(
   '/deleteorder/:id',
   isAdmin,
