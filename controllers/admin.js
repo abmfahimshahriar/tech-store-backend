@@ -133,7 +133,12 @@ exports.getProduct = async (req, res, next) => {
     let products;
     let totalItems;
     if (searchKey) {
-      products = await Product.find({ $text: { $search: searchKey } }).skip(skipItems).limit(pageLimit);
+      products = await Product.find({
+        title: {
+          $regex: searchKey,
+          '$options': 'i'
+        }
+      }).skip(skipItems).limit(pageLimit);
       totalItems = await Product.countDocuments({ $text: { $search: searchKey } });
     }
     else {
