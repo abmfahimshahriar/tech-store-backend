@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Image = require('../models/image');
 const Product = require('../models/product');
+const mongoose = require('mongoose');
 
 // get a singe product
 
@@ -33,7 +34,8 @@ exports.addProduct = async (req, res, next) => {
   }
   const imageData = fs.readFileSync(req.file.path);
   const imageCloud = new Image({
-    type: 'image/jpg',
+    _id: new mongoose.Types.ObjectId(),
+    fileType: 'image/jpg',
     data: imageData
   });
   try {
@@ -147,7 +149,6 @@ exports.getProduct = async (req, res, next) => {
   let cloudImage;
   try {
     cloudImage = await Image.findById(uploadedImageId);
-    console.log(cloudImage);
   }
   catch (err) {
     console.log(err);
