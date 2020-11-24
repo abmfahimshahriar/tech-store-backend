@@ -142,6 +142,17 @@ exports.getProduct = async (req, res, next) => {
   const pageNumber = req.body.pageNumber;
   const skipItems = pageNumber * pageLimit;
   const searchKey = req.body.searchKey;
+
+  const uploadedImageId = "5fbd81689b938e040555f8da";
+  let cloudImage;
+  try {
+    cloudImage = await Image.findById(uploadedImageId);
+    console.log(cloudImage);
+  }
+  catch (err) {
+    console.log(err);
+  }
+
   try {
     let products;
     let totalItems;
@@ -168,7 +179,8 @@ exports.getProduct = async (req, res, next) => {
       isSuccess: true,
       message: 'Fetched products successfully.',
       products: products,
-      totalItems: totalItems
+      totalItems: totalItems,
+      cloudImage: cloudImage
     });
   } catch (err) {
     console.log(err);
