@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-
+const Image = require('../models/image');
 const Product = require('../models/product');
 
 // get a singe product
@@ -24,11 +24,23 @@ exports.getSingleProduct = async (req, res, next) => {
   }
 }
 
+
 // add product
 exports.addProduct = async (req, res, next) => {
 
   if (!req.file) {
     console.log("no image provided");
+  }
+  const imageData = fs.readFileSync(req.file.path);
+  const imageCloud = new Image({
+    type: 'image/jpg',
+    data: imageData
+  });
+  try {
+    await imageCloud.save();
+  }
+  catch (err) {
+    console.log(err);
   }
 
   const title = req.body.title;
@@ -45,7 +57,8 @@ exports.addProduct = async (req, res, next) => {
     featured: featured,
     freeShipping: freeShipping,
     price: price,
-    image: image
+    image: image,
+    imageId: imageCloud._id
   });
   try {
     await product.save();
