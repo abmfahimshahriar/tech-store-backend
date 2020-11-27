@@ -32,18 +32,18 @@ exports.addProduct = async (req, res, next) => {
   if (!req.file) {
     console.log("no image provided");
   }
-  const imageData = fs.readFileSync(req.file.path);
-  const imageCloud = new Image({
-    _id: new mongoose.Types.ObjectId(),
-    fileType: 'image/jpg',
-    data: imageData
-  });
-  try {
-    await imageCloud.save();
-  }
-  catch (err) {
-    console.log(err);
-  }
+  // const imageData = fs.readFileSync(req.file.path);
+  // const imageCloud = new Image({
+  //   _id: new mongoose.Types.ObjectId(),
+  //   fileType: 'image/jpg',
+  //   data: imageData
+  // });
+  // try {
+  //   await imageCloud.save();
+  // }
+  // catch (err) {
+  //   console.log(err);
+  // }
 
   const title = req.body.title;
   const company = req.body.company;
@@ -60,7 +60,7 @@ exports.addProduct = async (req, res, next) => {
     freeShipping: freeShipping,
     price: price,
     image: image,
-    imageId: imageCloud._id
+    // imageId: imageCloud._id
   });
   try {
     await product.save();
@@ -145,14 +145,14 @@ exports.getProduct = async (req, res, next) => {
   const skipItems = pageNumber * pageLimit;
   const searchKey = req.body.searchKey;
 
-  const uploadedImageId = "5fbd81689b938e040555f8da";
-  let cloudImage;
-  try {
-    cloudImage = await Image.findById(uploadedImageId);
-  }
-  catch (err) {
-    console.log(err);
-  }
+  // const uploadedImageId = "5fbd96e99614d1034f328c02";
+  // let cloudImage;
+  // try {
+  //   cloudImage = await Image.findById(uploadedImageId);
+  // }
+  // catch (err) {
+  //   console.log(err);
+  // }
 
   try {
     let products;
@@ -181,7 +181,6 @@ exports.getProduct = async (req, res, next) => {
       message: 'Fetched products successfully.',
       products: products,
       totalItems: totalItems,
-      cloudImage: cloudImage
     });
   } catch (err) {
     console.log(err);
