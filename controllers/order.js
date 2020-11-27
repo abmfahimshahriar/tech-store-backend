@@ -41,12 +41,37 @@ exports.addOrder = async (req, res, next) => {
 
 //get orders
 exports.getOrder = async (req, res, next) => {
+    const pageLimit = req.body.pageLimit;
+    const pageNumber = req.body.pageNumber;
+    const skipItems = pageNumber * pageLimit;
+    const searchKey = req.body.searchKey;
     try {
-        const orders = await Order.find();
+        let orders;
+        let totalItems;
+        if (searchKey) {
+            orders = await Order.find({
+                cusName: {
+                    $regex: searchKey,
+                    '$options': 'i'
+                }
+            }).skip(skipItems).limit(pageLimit);
+            totalItems = await Order.countDocuments({
+                cusName: {
+                    $regex: searchKey,
+                    '$options': 'i'
+                }
+            });
+        }
+        else {
+            orders = await Order.find().skip(skipItems).limit(pageLimit);
+            totalItems = await Order.countDocuments();
+        }
 
         res.status(200).json({
+            isSuccess: true,
             message: 'Fetched orders successfully.',
             orders: orders,
+            totalItems: totalItems,
         });
     } catch (err) {
         console.log(err);
@@ -75,7 +100,6 @@ exports.deleteOrder = async (req, res, next) => {
         if (!order) {
             res.status(422).json({ message: 'order was not found' });
         }
-        //console.log(product);
         await Order.findByIdAndRemove(orderId);
         res.status(200).json({ message: 'Deleted order.' });
     } catch (err) {

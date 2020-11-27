@@ -12,7 +12,7 @@ router.put(
     orderController.addOrder
 );
 
-router.get(
+router.put(
     '/getOrders',
     isAdmin,
     orderController.getOrder
