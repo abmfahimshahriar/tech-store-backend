@@ -83,9 +83,12 @@ exports.getMyOrders = async (req, res, next) => {
     const userId = req.params.id;
     try {
         const orders = await Order.find({ creator: userId });
+        const totalItems = await Order.countDocuments({ creator: userId });
         res.status(200).json({
+            isSuccess: true,
             message: 'Fetched orders successfully.',
             orders: orders,
+            totalItems: totalItems
         });
     } catch (err) {
         console.log(err);
