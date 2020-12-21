@@ -33,6 +33,10 @@ const productSchema = new Schema({
   imageId: {
     type: String,
     required: false
+  },
+  imageArray: {
+    type: Array,
+    required: false
   }
 });
 

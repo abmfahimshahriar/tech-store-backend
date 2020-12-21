@@ -29,9 +29,9 @@ exports.getSingleProduct = async (req, res, next) => {
 // add product
 exports.addProduct = async (req, res, next) => {
 
-  if (!req.file) {
-    console.log("no image provided");
-  }
+  // if (!req.file) {
+  //   console.log("no image provided");
+  // }
   // const imageData = fs.readFileSync(req.file.path);
   // const imageCloud = new Image({
   //   _id: new mongoose.Types.ObjectId(),
@@ -44,14 +44,14 @@ exports.addProduct = async (req, res, next) => {
   // catch (err) {
   //   console.log(err);
   // }
-
   const title = req.body.title;
   const company = req.body.company;
   const description = req.body.description;
   const featured = req.body.featured;
   const freeShipping = req.body.freeShipping;
   const price = req.body.price;
-  const image = req.file.path;
+  const imageArray = req.body.imageArray;
+  // const image = req.file.path;
   const product = new Product({
     title: title,
     company: company,
@@ -59,8 +59,9 @@ exports.addProduct = async (req, res, next) => {
     featured: featured,
     freeShipping: freeShipping,
     price: price,
-    image: image,
+    // image: image,
     // imageId: imageCloud._id
+    imageArray: imageArray
   });
   try {
     await product.save();
@@ -76,29 +77,31 @@ exports.addProduct = async (req, res, next) => {
 // update product
 exports.updateProduct = async (req, res, next) => {
   const prodId = req.params.id;
-
   const title = req.body.title;
   const company = req.body.company;
   const description = req.body.description;
   const featured = req.body.featured;
   const freeShipping = req.body.freeShipping;
   const price = req.body.price;
+  const bodyImageArray = req.body.imageArray;
   //const image = req.file.path;
-  let image = null;
-  if (req.file) {
-    image = req.file.path;
-  }
-
+  // let image = null;
+  // if (req.file) {
+  //   image = req.file.path;
+  // }
+  let imageArray = null;
+  if(bodyImageArray.length > 0) imageArray = bodyImageArray;
   try {
     const product = await Product.findById(prodId);
     if (!product) {
       res.status(422).json({ message: 'product not found!' });
     }
 
-    if (image) {
-      clearImage(product.image);
+    if (imageArray) {
+      // clearImage(product.image);
       console.log('new image');
-      product.image = image;
+      // product.image = image;
+      product.imageArray = imageArray;
     }
 
     product.title = title;
@@ -125,7 +128,7 @@ exports.deleteProduct = async (req, res, next) => {
       res.status(422).json({ message: 'product was not found' });
     }
     //console.log(product);
-    clearImage(product.image);
+    // clearImage(product.image);
     await Product.findByIdAndRemove(prodId);
     res.status(200).json({ message: 'Deleted product.' });
   } catch (err) {
