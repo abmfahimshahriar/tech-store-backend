@@ -189,3 +189,23 @@ exports.getProduct = async (req, res, next) => {
     console.log(err);
   }
 };
+
+
+//get featured products
+exports.getFeaturedProducts = async (req, res, next) => {
+  const productLimit = req.body.productLimit;
+  try {
+    const featuredProducts = await Product.find({featured: true}).limit(productLimit);
+    if (!featuredProducts) {
+      res.status(422).json({ message: 'products not found!' });
+    }
+    else {
+      res.status(200).json({
+        message: 'Fetched products successfully.',
+        products: featuredProducts,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};

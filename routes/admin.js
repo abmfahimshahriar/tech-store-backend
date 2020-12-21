@@ -16,6 +16,11 @@ router.put(
   adminController.getProduct
 );
 
+router.put(
+  '/getFeaturedProducts',
+  adminController.getFeaturedProducts
+);
+
 router.get(
   '/getSingleProduct/:id',
   adminController.getSingleProduct
