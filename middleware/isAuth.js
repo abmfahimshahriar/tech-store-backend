@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
   const token = authHeader.split(' ')[1];
   let decodedToken;
   try {
-    decodedToken = jwt.verify(token, AllConstants.KeyConstants.AuthTokenKey);
+    decodedToken = jwt.verify(token, process.env.AUTH_KEY || AllConstants.KeyConstants.AuthTokenKey);
   } catch (err) {
     res.status(422).json({
         message: 'could not verify token',

@@ -49,7 +49,7 @@ exports.signin = async (req, res, next) => {
           email: loadedUser.email,
           userId: loadedUser._id.toString()
         },
-        AllConstants.KeyConstants.AdminTokenKey,
+        process.env.ADMIN_KEY || AllConstants.KeyConstants.AdminTokenKey,
         { expiresIn: '1h' }
       );
       role = 'admin';
@@ -60,7 +60,7 @@ exports.signin = async (req, res, next) => {
           email: loadedUser.email,
           userId: loadedUser._id.toString()
         },
-        AllConstants.KeyConstants.AuthTokenKey,
+        process.env.AUTH_KEY || AllConstants.KeyConstants.AuthTokenKey,
         { expiresIn: '1h' }
       );
       role = 'user';

@@ -68,7 +68,7 @@ app.use((error, req, res, next) => {
 
 mongoose 
   .connect(
-    AllConstants.DBConstants.MongoDbUri
+    process.env.MONGO_URI || AllConstants.DBConstants.MongoDbUri
     )
   .then(result => {
     console.log('connected.');
