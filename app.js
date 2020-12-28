@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 
-const AllConstants = require('./shared/constants');
+const AllConstants = require('./shared_constants/constants');
 
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');

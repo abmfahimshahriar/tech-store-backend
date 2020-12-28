@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const AllConstants = require('../shared/constants');
+const AllConstants = require('../shared_constants/constants');
 
 
 
